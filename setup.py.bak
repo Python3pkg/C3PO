@@ -9,7 +9,7 @@ setup(
     packages=['c3po', 'c3po.conf', 'c3po.mod', 'c3po.converters'],
     url='https://github.com/VorskiImagineering/C3PO',
     license='MIT',
-    author='Marek Nogacki',
+    author=u'Marek Nogacki',
     author_email='m.nogacki@hiddendata.co',
     description='''C3PO is Python module responsible for converting all .po files from locale directory into one .ods
 file and sending it to the Google Docs (spreadsheet link provided by user), so users with access to that spreadsheet

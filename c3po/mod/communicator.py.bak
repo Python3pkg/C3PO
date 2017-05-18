@@ -3,7 +3,7 @@
 
 import os
 import subprocess
-import urllib.parse
+import urlparse
 from subprocess import Popen, PIPE
 
 import gdata.spreadsheet.service
@@ -97,7 +97,7 @@ class Communicator(object):
         Parse GDocs key from Spreadsheet url.
         """
         try:
-            args = urllib.parse.parse_qs(urllib.parse.urlparse(self.url).query)
+            args = urlparse.parse_qs(urlparse.urlparse(self.url).query)
             self.key = args['key'][0]
         except KeyError as e:
             raise PODocsError(e)

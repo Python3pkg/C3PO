@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs
-import io
+import cStringIO
 import csv
 
 
@@ -16,7 +16,7 @@ class UTF8Recoder(object):
     def __iter__(self):
         return self
 
-    def __next__(self):
+    def next(self):
         return self.reader.next().encode("utf-8")
 
 
@@ -32,9 +32,9 @@ class UnicodeReader(object):
         recorder = UTF8Recoder(self.file, encoding)
         self.reader = csv.reader(recorder, dialect=dialect, **kwargs)
 
-    def __next__(self):
-        row = next(self.reader)
-        return [str(s, "utf-8") for s in row]
+    def next(self):
+        row = self.reader.next()
+        return [unicode(s, "utf-8") for s in row]
 
     def __iter__(self):
         return self
@@ -52,7 +52,7 @@ class UnicodeWriter(object):
     def __init__(self, file_path, dialect=csv.excel,
                  encoding="utf-8", **kwargs):
         # Redirect output to a queue
-        self.queue = io.StringIO()
+        self.queue = cStringIO.StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwargs)
         self.stream = open(file_path, 'wb')
         self.encoder = codecs.getincrementalencoder(encoding)()

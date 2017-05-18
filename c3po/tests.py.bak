@@ -9,7 +9,7 @@ import unittest
 import gdata.data
 from c3po.converters.po_ods import csv_to_ods
 
-from .mod.communicator import Communicator
+from mod.communicator import Communicator
 
 
 TESTS_URL = 'https://docs.google.com/spreadsheet/ccc?key=0AnVOHClWGpLZdGFpQmpVUUx2eUg4Z0NVMGVQX3NrNkE#gid=0'

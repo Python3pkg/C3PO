@@ -4,7 +4,7 @@
 import sys
 import os
 
-from . import settings_default
+import settings_default
 
 
 class Singleton(type):
@@ -18,7 +18,9 @@ class Singleton(type):
         return cls.instance
 
 
-class SettingsWrapper(object, metaclass=Singleton):
+class SettingsWrapper(object):
+    __metaclass__ = Singleton
+
     settings_dict = {}
     custom_dict = {}
 
@@ -28,7 +30,7 @@ class SettingsWrapper(object, metaclass=Singleton):
         self.configure()
 
     def dict_to_attrs(self, sdict):
-        for k, v in list(sdict.items()):
+        for k, v in sdict.items():
             setattr(self, k, v)
 
     def configure(self):
@@ -59,7 +61,7 @@ class SettingsWrapper(object, metaclass=Singleton):
     def print_settings(self):
         for attr in dir(self):
             if not attr.startswith('_'):
-                print(attr, getattr(self, attr))
+                print attr, getattr(self, attr)
 
 
 settings = SettingsWrapper()

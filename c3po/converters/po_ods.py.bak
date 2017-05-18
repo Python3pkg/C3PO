@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-
+from itertools import izip
 
 import polib
 from odslib import ODS
 from c3po.conf import settings
 from c3po.converters.po_csv import _get_all_po_filenames
-from c3po.converters.str import UnicodeReader
+from c3po.converters.unicode import UnicodeReader
 
 
 def _escape_apostrophe(entry):
@@ -91,7 +91,7 @@ def po_to_ods(languages, locale_root, po_files_path, temp_file_path):
     :param temp_file_path: path where temporary files will be saved
     """
     title_row = ['file', 'comment', 'msgid']
-    title_row += [s + ':msgstr' for s in languages]
+    title_row += map(lambda s: s + ':msgstr', languages)
 
     ods = ODS()
 
@@ -151,12 +151,12 @@ def csv_to_ods(trans_csv, meta_csv, local_ods):
 
     ods = ODS()
 
-    trans_title = next(trans_reader)
-    next(meta_reader)
+    trans_title = trans_reader.next()
+    meta_reader.next()
 
     _prepare_ods_columns(ods, trans_title)
 
-    for i, (trans_row, meta_row) in enumerate(zip(trans_reader, meta_reader)):
+    for i, (trans_row, meta_row) in enumerate(izip(trans_reader, meta_reader)):
         _write_row_into_ods(ods, 0, i, trans_row)
         _write_row_into_ods(ods, 1, i, meta_row)
 
